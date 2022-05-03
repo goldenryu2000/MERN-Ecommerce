@@ -43,9 +43,9 @@ const OrderScreen = () => {
     const addPayPalScript = async () => {
       const { data: clientID } = await axios.get("/api/config/paypal");
       const script = document.createElement("script");
-      document.cookie = "SameSite=None; Secure";
+      // document.cookie = "SameSite=None; Secure";
       script.type = "text/javascript";
-      script.src = `https://www.paypal.com/sdk/js?client-id=${clientID}&currency=USD`;
+      script.src = `https://www.paypal.com/sdk/js?client-id=${clientID}`;
       script.async = true;
       script.onload = () => {
         setSdkReady(true);
@@ -64,6 +64,7 @@ const OrderScreen = () => {
       }
     }
   }, [dispatch, id, successPay, order]);
+
   const successPaymentHandler = (paymentResult) => {
     console.log(paymentResult);
     dispatch(payOrder(id, paymentResult));
@@ -175,7 +176,7 @@ const OrderScreen = () => {
                   <Col>$ {order.totalPrice}</Col>
                 </Row>
               </ListGroupItem>
-              {!order.isPaid && (
+              {/* {!order.isPaid && (
                 <ListGroupItem>
                   {loadingPay && <Loader />}
                   {sdkReady ? (
@@ -187,7 +188,9 @@ const OrderScreen = () => {
                     />
                   )}
                 </ListGroupItem>
-              )}
+              )} */}
+
+              <Button disabled>Payment Methods to be Added</Button>
             </ListGroup>
           </Card>
         </Col>
