@@ -11,15 +11,18 @@
 - Product pagination
 - User profile with orders
 - Checkout process (shipping, payment method, etc)
+- Admin user management
+- Admin product management
+- Admin Order details page
+- Mark orders as delivered option
 - Database seeder (products & users)
+
   ### \*\*(To be added)\*\*
+
   - Top products carousel
   - Product search feature
-  - Admin user management
-  - Admin product management
-  - Admin Order details page
-  - Mark orders as delivered option
-  - PayPal / credit card integration
+
+  <!-- - ****]PayPal / credit card integration -->
 
 ## Usage
 
