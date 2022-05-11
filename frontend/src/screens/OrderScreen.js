@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import axios from "axios";
-import { PayPalButton } from "react-paypal-button-v2";
-
+import React, { useEffect } from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import {
   Button,
   Row,
@@ -15,19 +12,31 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import { getOrderDetails, payOrder } from "../actions/orderActions";
-import { ORDER_PAY_RESET } from "../constants/orderConstants";
+import {
+  deliverOrder,
+  getOrderDetails,
+  payOrder,
+} from "../actions/orderActions";
+import {
+  ORDER_PAY_RESET,
+  ORDER_DELIVER_RESET,
+} from "../constants/orderConstants";
 const OrderScreen = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
-
-  const [sdkReady, setSdkReady] = useState(false);
 
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   const orderPay = useSelector((state) => state.orderPay);
   const { loading: loadingPay, success: successPay } = orderPay;
+
+  const orderDeliver = useSelector((state) => state.orderDeliver);
+  const { loading: loadingDeliver, success: successDeliver } = orderDeliver;
 
   if (!loading) {
     //Calculate Prices
@@ -40,36 +49,23 @@ const OrderScreen = () => {
   }
 
   useEffect(() => {
-    const addPayPalScript = async () => {
-      const { data: clientID } = await axios.get("/api/config/paypal");
-      const script = document.createElement("script");
-      // document.cookie = "SameSite=None; Secure";
-      script.type = "text/javascript";
-      script.src = `https://www.paypal.com/sdk/js?client-id=${clientID}`;
-      script.async = true;
-      script.onload = () => {
-        setSdkReady(true);
-      };
-      document.body.appendChild(script);
-    };
-
-    if (!order || successPay) {
-      dispatch({ type: ORDER_PAY_RESET });
-      dispatch(getOrderDetails(id));
-    } else if (!order.isPaid) {
-      if (!window.paypal) {
-        addPayPalScript();
-      } else {
-        setSdkReady(true);
-      }
+    if (!userInfo) {
+      navigate("/login");
     }
-  }, [dispatch, id, successPay, order]);
+    if (!order || successPay || successDeliver) {
+      dispatch({ type: ORDER_PAY_RESET });
+      dispatch({ type: ORDER_DELIVER_RESET });
+      dispatch(getOrderDetails(id));
+    }
+  }, [dispatch, id, successPay, order, successDeliver, userInfo, navigate]);
 
-  const successPaymentHandler = (paymentResult) => {
-    console.log(paymentResult);
-    dispatch(payOrder(id, paymentResult));
+  const paymentHandler = () => {
+    dispatch(payOrder(id));
   };
 
+  const deliverHandler = () => {
+    dispatch(deliverOrder(order));
+  };
   return loading ? (
     <Loader />
   ) : error ? (
@@ -176,21 +172,27 @@ const OrderScreen = () => {
                   <Col>$ {order.totalPrice}</Col>
                 </Row>
               </ListGroupItem>
-              {/* {!order.isPaid && (
-                <ListGroupItem>
-                  {loadingPay && <Loader />}
-                  {sdkReady ? (
-                    <Loader />
-                  ) : (
-                    <PayPalButton
-                      amount={order.totalPrice}
-                      onSuccess={successPaymentHandler}
-                    />
-                  )}
-                </ListGroupItem>
-              )} */}
+              {userInfo && !userInfo.isAdmin && !order.isPaid && (
+                <Button disabled>Payment to be approved by Admin</Button>
+              )}
 
-              <Button disabled>Payment Methods to be Added</Button>
+              {userInfo && userInfo.isAdmin && (
+                <div className="d-grid gap-2">
+                  {loadingPay && <Loader />}
+                  <Button variant="primary" size="md" onClick={paymentHandler}>
+                    Mark As Paid
+                  </Button>
+                  <Button
+                    variant="primary"
+                    size="md"
+                    onClick={deliverHandler}
+                    disabled={order.isPaid ? false : true}
+                  >
+                    Mark as Delivered
+                  </Button>
+                  {loadingDeliver && <Loader />}
+                </div>
+              )}
             </ListGroup>
           </Card>
         </Col>

@@ -13,7 +13,6 @@ const UserEditScreen = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
-  // const [message, setMessage] = useState(null);
 
   const { id } = useParams();
   const userDetails = useSelector((state) => state.userDetails);
