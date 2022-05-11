@@ -14,7 +14,7 @@
 - Admin user management
 - Admin product management
 - Admin Order details page
-- Mark orders as delivered option
+- Mark orders as paid and delivered option
 - Database seeder (products & users)
 
   ### \*\*(To be added)\*\*
