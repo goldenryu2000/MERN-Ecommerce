@@ -14,13 +14,12 @@
 - Admin user management
 - Admin product management
 - Admin Order details page
-- Mark orders as paid and delivered option
+- Mark orders as paid and delivered option (admin)
 - Database seeder (products & users)
+- Top products carousel
+- Product search feature
 
-  ### \*\*(To be added)\*\*
-
-  - Top products carousel
-  - Product search feature
+  <!-- ### \*\*(To be added)\*\* -->
 
   <!-- - ****]PayPal / credit card integration -->
 
