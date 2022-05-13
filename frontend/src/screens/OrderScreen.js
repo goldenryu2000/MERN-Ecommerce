@@ -132,7 +132,14 @@ const OrderScreen = () => {
                           </Link>
                         </Col>
                         <Col md={4}>
-                          {item.qty} x ${item.price} = ${item.qty * item.price}
+                          {item.qty} x ₹
+                          {item.price.toLocaleString("en-IN", {
+                            maximumFractionDigits: 2,
+                          })}{" "}
+                          = ₹
+                          {(item.qty * item.price).toLocaleString("en-IN", {
+                            maximumFractionDigits: 2,
+                          })}
                         </Col>
                       </Row>
                     </ListGroupItem>
@@ -151,25 +158,45 @@ const OrderScreen = () => {
               <ListGroupItem>
                 <Row>
                   <Col>Items</Col>
-                  <Col>$ {order.itemsPrice}</Col>
+                  <Col>
+                    ₹{" "}
+                    {order.itemsPrice.toLocaleString("en-IN", {
+                      maximumFractionDigits: 2,
+                    })}
+                  </Col>
                 </Row>
               </ListGroupItem>
               <ListGroupItem>
                 <Row>
                   <Col>Shipping</Col>
-                  <Col>$ {order.shippingPrice}</Col>
+                  <Col>
+                    ₹{" "}
+                    {order.shippingPrice.toLocaleString("en-IN", {
+                      maximumFractionDigits: 2,
+                    })}
+                  </Col>
                 </Row>
               </ListGroupItem>
               <ListGroupItem>
                 <Row>
                   <Col>Tax</Col>
-                  <Col>$ {order.taxPrice}</Col>
+                  <Col>
+                    ₹{" "}
+                    {order.taxPrice.toLocaleString("en-IN", {
+                      maximumFractionDigits: 2,
+                    })}
+                  </Col>
                 </Row>
               </ListGroupItem>
               <ListGroupItem>
                 <Row>
                   <Col>Total</Col>
-                  <Col>$ {order.totalPrice}</Col>
+                  <Col>
+                    ₹{" "}
+                    {order.totalPrice.toLocaleString("en-IN", {
+                      maximumFractionDigits: 2,
+                    })}
+                  </Col>
                 </Row>
               </ListGroupItem>
               {userInfo && !userInfo.isAdmin && !order.isPaid && (

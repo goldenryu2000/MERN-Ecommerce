@@ -31,7 +31,7 @@ const ProductScreen = () => {
 
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
-
+  product.price = product.price ? product.price : 0;
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
@@ -90,7 +90,12 @@ const ProductScreen = () => {
                     {" "}
                   </Rating>
                 </ListGroup.Item>
-                <ListGroup.Item>Price : $ {product.price}</ListGroup.Item>
+                <ListGroup.Item>
+                  Price : ₹{" "}
+                  {product.price.toLocaleString("en-IN", {
+                    maximumFractionDigits: 2,
+                  })}
+                </ListGroup.Item>
                 <ListGroup.Item>
                   Description : {product.description}
                 </ListGroup.Item>
@@ -103,7 +108,14 @@ const ProductScreen = () => {
                     <Row>
                       <Col>Price:</Col>
                       <Col>
-                        <strong>$ {product.price}</strong>
+                        <strong>
+                          ₹{" "}
+                          {product.price
+                            ? product.price.toLocaleString("en-IN", {
+                                maximumFractionDigits: 2,
+                              })
+                            : " "}
+                        </strong>
                       </Col>
                     </Row>
                   </ListGroupItem>

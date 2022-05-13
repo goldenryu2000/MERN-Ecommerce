@@ -19,20 +19,19 @@ const PlaceOrderScreen = () => {
   const cart = useSelector((state) => state.cart);
 
   //Calculate Prices
-  const addDecimals = (num) => {
-    return (Math.round(num * 100) / 100).toFixed(2);
-  };
-  cart.itemsPrice = addDecimals(
-    cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+  cart.itemsPrice = cart.cartItems.reduce(
+    (acc, item) => acc + item.price * item.qty,
+    0
   );
 
-  cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 10);
+  cart.shippingPrice = cart.itemsPrice > 100 ? 0 : 10;
 
-  cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)));
+  cart.taxPrice = Number((0.15 * cart.itemsPrice).toFixed(2));
 
-  cart.totalPrice = addDecimals(
-    Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)
-  );
+  cart.totalPrice =
+    Number(cart.itemsPrice) +
+    Number(cart.shippingPrice) +
+    Number(cart.taxPrice);
 
   const orderCreate = useSelector((state) => state.orderCreate);
   const { order, success, error } = orderCreate;
@@ -98,7 +97,14 @@ const PlaceOrderScreen = () => {
                           </Link>
                         </Col>
                         <Col md={4}>
-                          {item.qty} x ${item.price} = ${item.qty * item.price}
+                          {item.qty} x ₹
+                          {item.price.toLocaleString("en-IN", {
+                            maximumFractionDigits: 2,
+                          })}{" "}
+                          = ₹
+                          {(item.qty * item.price).toLocaleString("en-IN", {
+                            maximumFractionDigits: 2,
+                          })}
                         </Col>
                       </Row>
                     </ListGroupItem>
@@ -117,25 +123,45 @@ const PlaceOrderScreen = () => {
               <ListGroupItem>
                 <Row>
                   <Col>Items</Col>
-                  <Col>$ {cart.itemsPrice}</Col>
+                  <Col>
+                    ₹{" "}
+                    {cart.itemsPrice.toLocaleString("en-IN", {
+                      maximumFractionDigits: 2,
+                    })}
+                  </Col>
                 </Row>
               </ListGroupItem>
               <ListGroupItem>
                 <Row>
                   <Col>Shipping</Col>
-                  <Col>$ {cart.shippingPrice}</Col>
+                  <Col>
+                    ₹{" "}
+                    {cart.shippingPrice.toLocaleString("en-IN", {
+                      maximumFractionDigits: 2,
+                    })}
+                  </Col>
                 </Row>
               </ListGroupItem>
               <ListGroupItem>
                 <Row>
                   <Col>Tax</Col>
-                  <Col>$ {cart.taxPrice}</Col>
+                  <Col>
+                    ₹{" "}
+                    {cart.taxPrice.toLocaleString("en-IN", {
+                      maximumFractionDigits: 2,
+                    })}
+                  </Col>
                 </Row>
               </ListGroupItem>
               <ListGroupItem>
                 <Row>
                   <Col>Total</Col>
-                  <Col>$ {cart.totalPrice}</Col>
+                  <Col>
+                    ₹{" "}
+                    {cart.totalPrice.toLocaleString("en-IN", {
+                      maximumFractionDigits: 2,
+                    })}
+                  </Col>
                 </Row>
               </ListGroupItem>
               <ListGroupItem>

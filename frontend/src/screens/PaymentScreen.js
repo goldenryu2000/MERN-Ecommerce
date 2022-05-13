@@ -13,12 +13,6 @@ const PaymentScreen = () => {
   if (!shippingAddress) {
     navigate("/shipping");
   }
-  //   shippingAddress = {
-  //     address: shippingAddress?.address ?? "",
-  //     city: shippingAddress?.city ?? "",
-  //     country: shippingAddress?.country ?? "",
-  //     postalCode: shippingAddress?.postalCode ?? "",
-  //   };
   const [paymentMethod, setPaymentMethod] = useState("PayPal");
 
   const dispatch = useDispatch();
@@ -52,6 +46,14 @@ const PaymentScreen = () => {
               id="Stripe"
               name="paymentMethod"
               value="Stripe"
+              onChange={(e) => setPaymentMethod(e.target.value)}
+            ></Form.Check>
+            <Form.Check
+              type="radio"
+              label="Cash On Delivery"
+              id="Stripe"
+              name="paymentMethod"
+              value="COD"
               onChange={(e) => setPaymentMethod(e.target.value)}
             ></Form.Check>
           </Col>
