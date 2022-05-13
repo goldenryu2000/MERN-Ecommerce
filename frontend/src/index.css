@@ -1,6 +1,11 @@
 main{
     min-height: 80vh;
 }
+.card-img{
+  width: 16.5rem;
+  height: 16rem;
+  object-fit: cover;
+}
 h3{
     padding: 1rem 0;
 }
