@@ -2,8 +2,6 @@
 
 > eCommerce platform built with the MERN stack & Redux.
 
-<!-- > ![screenshot](https://github.com/bradtraversy/proshop_mern/blob/master/uploads/Screen%20Shot%202020-09-29%20at%205.50.52%20PM.png) -->
-
 ## Features
 
 - Full featured shopping cart
@@ -19,19 +17,7 @@
 - Top products carousel
 - Product search feature
 
-  <!-- ### \*\*(To be added)\*\* -->
-
-  <!-- - ****]PayPal / credit card integration -->
-
 ## Usage
-
-### ES Modules in Node
-
-We use ECMAScript Modules in the backend in this project. Be sure to have at least Node v14.6+ or you will need to add the "--experimental-modules" flag.
-
-Also, when importing a file (not a package), be sure to add .js at the end or you will get a "module not found" error
-
-You can also install and setup Babel if you would like
 
 ### Env Variables
 
@@ -42,7 +28,6 @@ NODE_ENV = development
 PORT = 5000
 MONGO_URI = your mongodb uri
 JWT_SECRET = 'abc123'
-PAYPAL_CLIENT_ID = your paypal client id
 ```
 
 ### Install Dependencies (frontend & backend)
@@ -62,16 +47,6 @@ npm run dev
 # Run backend only
 npm run server
 ```
-
-## Build & Deploy
-
-```
-# Create frontend prod build
-cd frontend
-npm run build
-```
-
-There is a Heroku postbuild script, so if you push to Heroku, no need to build manually for deployment to Heroku
 
 ### Seed Database
 
@@ -97,3 +72,41 @@ john@example.com (Customer)
 jane@example.com (Customer)
 123456
 ```
+
+## Screenshots
+
+- Home Screen
+
+  ![HomeScreen](https://i.imgur.com/UnluhBX.png)
+
+- Product Screen
+
+  ![Product Screen](https://i.imgur.com/rztBxmD.png)
+
+- Cart Screen
+
+  ![Cart Screen](https://i.imgur.com/r1l4e7p.png)
+
+- Register Screen
+
+  ![Register Screen](https://i.imgur.com/G7AoTWl.png)
+
+- User Profile Screen
+
+  ![User Profile Screen](https://i.imgur.com/RjHMD0U.png)
+
+- Order Screen
+
+  ![Order Screen](https://i.imgur.com/0NwMfhU.png)
+
+- Admin Users Screen
+
+  ![Admin Users Screen](https://i.imgur.com/qPoHlFp.png)
+
+- Admin Orders Screen
+
+  ![Admin Orders Screen](https://i.imgur.com/D0TCAhX.png)
+
+- Admin Products Screen
+
+  ![Admin Products Screen](https://i.imgur.com/ISlHdBg.png)
