@@ -54,7 +54,6 @@ const ProductEditScreen = () => {
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
-    console.log(file);
     const formData = new FormData();
     formData.append("image", file);
     setUploading(true);
@@ -64,12 +63,11 @@ const ProductEditScreen = () => {
           "Content-Type": "multipart/form-data",
         },
       };
-      const { data } = axios.post("/api/upload", formData, config);
-      console.log(data);
+      const { data } = await axios.post("/api/upload", formData, config);
       setImage(data);
       setUploading(false);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       setUploading(false);
     }
   };
@@ -129,14 +127,10 @@ const ProductEditScreen = () => {
                 value={image}
                 onChange={(e) => setImage(e.target.value)}
               ></Form.Control>
-              <Form.Label>Upload an Image (To be added)</Form.Label>
-              <Form.Control type="file" onChange={uploadFileHandler} disabled />
-              {/* <Form.File
-                id="image-file"
-                label="Choose File"
-                custom
-                onChange={uploadFileHandler}
-              ></Form.File> */}
+            </Form.Group>
+            <Form.Group controlId="formFile" className="mb-3">
+              <Form.Label>Upload an Image</Form.Label>
+              <Form.Control type="file" onChange={uploadFileHandler} />
               {uploading && <Loader />}
             </Form.Group>
             <Form.Group controlId="brand">

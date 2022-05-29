@@ -4,7 +4,7 @@ import multer from "multer";
 const router = express.Router();
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, "./uploads");
+    cb(null, "uploads/");
   },
   filename(req, file, cb) {
     cb(
@@ -13,6 +13,7 @@ const storage = multer.diskStorage({
     );
   },
 });
+
 function checkFileType(file, cb) {
   const filetypes = /jpg|jpeg|png/;
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
@@ -21,9 +22,10 @@ function checkFileType(file, cb) {
   if (extname && mimetype) {
     return cb(null, true);
   } else {
-    cb("Error: Images Only!");
+    return cb("Error: Images Only!");
   }
 }
+
 const upload = multer({
   storage,
   fileFilter: function (req, file, cb) {
@@ -32,7 +34,7 @@ const upload = multer({
 });
 
 router.post("/", upload.single("image"), (req, res) => {
-  console.log(req.file);
   res.send(`/${req.file.path}`);
 });
+
 export default router;
